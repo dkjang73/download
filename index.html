@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<HTML>
+
+<HEAD>
+ <META HTTP-EQUIV="Expires" CONTENT="-1">
+ <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+ <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, no-store, must-revalidate">
+ <META NAME="viewport" CONTENT="width=device-width,height=device-height,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+ <META NAME="mobile-web-app-capable" CONTENT="yes">
+ <META NAME="mobile-web-app-title" CONTENT="CUBE">
+ <META NAME="mobile-web-app-status-bar-style" CONTENT="black">
+ <META NAME="format-detection" CONTENT="telephone=no, address=no, email=no">
+ <TITLE>CUBE</TITLE>
+ <LINK REL="apple-touch-icon" HREF="/libs/icons/cube_192.png">
+ <LINK REL="preload" HREF="/libs/fonts/pretendard-gov-subset.css" as="style">
+ <LINK REL="preload" HREF="/libs/jquery/jquery-3.7.1.min.js" as="script">
+ <LINK REL="shortcut icon" HREF="#">
+ <LINK REL="stylesheet" TYPE="text/css" HREF="./js/fullpage.css" />
+ <LINK REL="preload" HREF="./fonts/BMDOHYEON.woff2" AS="font" TYPE="font/woff2" CROSSORIGIN>
+ <LINK REL="preload" HREF="./fonts/NotoSansKR-Regular.woff2" AS="font" TYPE="font/woff2" CROSSORIGIN>
+ <STYLE>
+  @font-face{font-family:'Noto Sans KR';font-style:normal;font-weight:200;font-display:block;src:url('./fonts/NotoSansKR-Regular.woff2') format('woff2');}
+  @font-face{font-family:'Do Hyeon';font-style:normal;font-weight:200;font-display:block;src:url('./fonts/BMDOHYEON.woff2') format('woff2');}
+  *{color:#fff;}
+  BODY{font-family:'Noto Sans KR',sans-serif,arial,helvetica;font-size:1rem;line-height:140%;letter-spacing:-0.05rem;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  A{text-decoration:none;outline:none;}
+  I{font-style:normal;}
+  UL,LI{margin:0;padding:0;list-style:none;}
+  .fp-watermark{display:none;}
+  #fp-nav ul li a span,.fp-slidesNav ul li a span{background-color:white;}
+  .section{background:no-repeat center/cover;}
+  .intro{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;z-index:10;}
+  .intro h1{font-family:'Do Hyeon';font-size:5rem;font-weight:normal;line-height:120%;margin:0;}
+  .intro p{margin:0 auto;font-size:1rem;font-weight:100;}
+  .section-filter{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:2;}
+  #menu{position:absolute;top:80px;left:50%;transform:translate(-50%,-50%);width:70%;z-index:100;}
+  #menu .logo{font-family:'Do Hyeon';font-size:2rem;font-weight:normal;line-height:120%;margin:0;}
+  #menu .menu-right{position:absolute;top:10px;right:0;font-size:1rem;font-weight:400;text-align:right;}
+  #menu .menu-right div{display:inline-block;margin:10px;}
+  .modal-box{visibility:hidden;position:absolute;left:50%;padding:20px;transform:translate(-50%,0);background:white;border:1px solid silver;border-radius:20px;box-shadow:0 2px 4px rgba(0,0,0,0.1);opacity:0;transition:0.5s all ease-out;z-index:200;font-size:1rem;color:#333;}
+  .modal-box.show{visibility:visible;opacity:1;}
+  #book{width:760px;top:5%;}
+  #qr-modal{width:300px;text-align:center;top:20%;}
+  #qr-modal img{width:200px;height:200px;margin:20px 0;}
+  #qr-modal p{color:#333;font-weight:600;margin-bottom:10px;}
+  #guide-modal{width:auto;top:5%;text-align:center;}
+  .guide-viewport{position:relative;width:800px;margin:10px auto;overflow:hidden;}
+  .guide-wrapper{display:flex;transition:transform 0.5s ease-in-out;}
+  .guide-slide{flex:0 0 800px;width:800px;}
+  .guide-slide img{width:100%;display:block;border-radius:10px;border:1px solid #eee;}
+  .guide-slide p{margin-top:10px;color:#666;}
+  .guide-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;border:none;padding:0;line-height:0;}
+  .guide-arrow:hover{background:rgba(0,0,0,0.8);}
+  .guide-arrow.prev{left:10px;}
+  .guide-arrow.next{right:10px;}
+  .guide-arrow svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+  #btn-download, #btn-remote{margin-left:1rem;display:inline-flex;align-items:center;justify-content:center;position:relative;padding:0.5rem 1rem 0.7rem 1rem;border-radius:2rem!important;border:1px solid transparent;background-color:#0d6efd;cursor:pointer;transition:all .15s ease;user-select:none;vertical-align:middle;line-height:1.5;font-size:1rem;font-weight:500;color:#fff;white-space:nowrap;}
+  .modal-close{position:absolute;top:-15px;right:-15px;padding:10px;width:20px;height:20px;background:rgba(255,255,255,0.9);border:1px solid silver;border-radius:20px;box-shadow:0 2px 4px rgba(0,0,0,0.1);cursor:pointer;}
+  .modal-close:after{content:"\00d7";font-size:1.375rem;line-height:70%;color:gray;}
+  #book LI{position:relative;float:left;margin:5px;padding:20px;width:200px;min-height:100px;border:1px solid transparent;border-radius:10px;transition:0.5s all ease-out;cursor:pointer;color:#333;}
+  #book LI:hover{border:1px solid rgba(0,0,0,0.2);}
+  #book LI:nth-child(3n+1){clear:both;}
+  #book LI>I{display:block;font-size:1rem;color:black;}
+  #book LI>.link{position:absolute;top:40px;right:30px;}
+  #book LI>.logo-img{margin-bottom:10px;width:112px;height:60px;background:url(./img/book_logo.jpg) no-repeat;}
+  #book LI:nth-child(1) .logo-img{background-position:-448px 0;}
+  #book LI:nth-child(2) .logo-img{background-position:-674px 0;}
+  #book LI:nth-child(3) .logo-img{background-position:0 0;}
+  #book LI:nth-child(4) .logo-img{background-position:-113px 0;}
+  #book LI:nth-child(5) .logo-img{background-position:-222px 0;}
+  #book LI:nth-child(6) .logo-img{background-position:-335px 0;}
+  #book LI:nth-child(7) .logo-img{background-position:-561px 0;}
+  #book LI:nth-child(8) .logo-img{background-position:-787px 0;}
+  #section1 p{margin-bottom:20px;}
+  #clientIP{color:rgba(255,255,255,0.5);}
+  .menu-right>A{margin-left:20px;}
+  .menu-right>A.btn-download{padding:8px 20px 10px 20px;background:white;color:black;border:1px solid gray;border-radius:30px;cursor:pointer;}
+  .intro > .icon-download{display:inline-flex;align-items:center;justify-content:center;margin:50px 10px 0 0;width:160px;height:48px;background-size:100% 100%;background-position:center;background-repeat:no-repeat;cursor:pointer;}
+  .icon-apple{background-image:url(./img/icon_apple.svg);}
+  .icon-android{background-image:url(./img/icon_android.svg);}
+  .icon-microsoft{background-image:url(./img/icon_microsoft.svg);}
+  .copyright{position:absolute;bottom:80px;width:100%;font-size:1rem;font-weight:100;text-align:center;z-index:2;}
+  .bold-text{color:black;font-weight:700;}
+  @media (max-width:780px){.btn-book,.btn-remote,.icon-microsoft{display:none!important;}.copyright{bottom:50px;}.intro h1{font-size:4rem;}}
+  @media (max-width:560px){.btn-book,.btn-download,.btn-remote,.icon-microsoft{display:none!important;}.icon-download{width:130px;height:39px;}.intro{width:300px;}.intro h1{font-size:3rem;}.intro p,.copyright{font-size:1rem;}}
+  body.is-android .icon-apple,body.is-android .icon-microsoft{display:none!important;}
+  body.is-ios .icon-android,body.is-ios .icon-microsoft{display:none!important;}
+ </STYLE>
+</HEAD>
+
+<BODY ONCONTEXTMENU="return false" ONSELECTSTART="return false" ONDRAGSTART="return false">
+
+ <DIV ID="menu">
+  <DIV CLASS="logo">CUBE</DIV>
+  <DIV CLASS="menu-right">
+   <A CLASS="btn-download" HREF="#" ONCLICK="showGuide('windows');return false;">다운로드</A>
+   <A CLASS="btn-remote" HREF="#" ONCLICK="showGuide('remote');return false;">원격지원</A>
+   <A CLASS="btn-book" HREF="#" ONCLICK="book('show');return false;" TARGET="_blink">통신사가입증명서</A>
+  </DIV>
+
+  <DIV ID="book" CLASS="modal-box">
+   <I CLASS="modal-close" ONCLICK="book('close');"></I>
+   <UL>
+    <LI ONCLICK="book('kt');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">모바일서비스<BR>114, 1588-0010<BR>유선서비스<BR>100</I></LI>
+    <LI ONCLICK="book('uplus');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">모바일서비스<BR>114, 1544-0010<BR>유선서비스<BR>101</I></LI>
+    <LI ONCLICK="book('tworld');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">모바일서비스<BR>114, 080-011-6000, 1599-0011<BR>유선서비스<BR>080-816-2000, 1600-2000</I></LI>
+    <LI ONCLICK="book('sktelink');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">114, 1599-0999</I></LI>
+    <LI ONCLICK="book('skbroadband');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">080-8282-106</I></LI>
+    <LI ONCLICK="book('hellomobile');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">1855-1144, 1855-2114</I></LI>
+    <LI ONCLICK="book('sejong');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">1688-1000, 080-889-1000</I></LI>
+    <LI ONCLICK="book('kct');"><I CLASS="link">홈페이지<BR>바로가기</I><I CLASS="logo-img"></I><I CLASS="text">070-8188-0114</I></LI>
+   </UL>
+  </DIV>
+
+  <DIV ID="qr-modal" CLASS="modal-box">
+   <I CLASS="modal-close" ONCLICK="closeQR();"></I>
+   <P ID="qr-title">앱 다운로드</P>
+   <IMG ID="qr-image" SRC="" ALT="QR Code">
+   <P STYLE="color:#666;">QR 코드를 스캔하여 앱을 설치하세요.</P>
+  </DIV>
+
+  <DIV ID="guide-modal" CLASS="modal-box">
+   <I CLASS="modal-close" ONCLICK="closeGuide();"></I>
+   <P ID="guide-title" STYLE="color:#333;font-size:1.5rem;font-weight:600;margin-bottom:10px;">가이드</P>
+   <DIV CLASS="guide-viewport">
+    <DIV ID="guide-list" CLASS="guide-wrapper"></DIV>
+    <BUTTON CLASS="guide-arrow prev" ONCLICK="moveGuide(-1);">
+     <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </BUTTON>
+    <BUTTON CLASS="guide-arrow next" ONCLICK="moveGuide(1);">
+     <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </BUTTON>
+   </DIV>
+  </DIV>
+ </DIV>
+
+ <DIV ID="fullpage">
+  <DIV CLASS="section active" ID="page1">
+   <DIV CLASS="section-filter"></DIV>
+   <DIV CLASS="intro">
+    <H1>고객 평생가치<BR>극대화</H1>
+    <P>고객가치의 극대화를 위한 높은 수준의 고객서비스를 제공해 주는 솔루션은 큐브 입니다.</P>
+    <A CLASS="btn-sample" HREF="/home/sample/photo_ai.exe" TARGET="_blink"><DIV ID="clientIP"></DIV></A>
+    <A CLASS="icon-download icon-apple" ONCLICK="clickApple();"></A>
+    <A CLASS="icon-download icon-android" ONCLICK="clickAndroid();"></A>
+    <A CLASS="icon-download icon-microsoft" HREF="#" ONCLICK="showGuide('windows');return false;"></A>
+   </DIV>
+  </DIV>
+  <DIV CLASS="section" ID="page2"><DIV CLASS="section-filter"></DIV><DIV CLASS="intro"><H1>합리적인<BR>의사결정을 위한<BR>진료관리</H1><P>고객만족을 위한 병원경영의 핵심은 환자를 고객으로 인식하는데서 시작합니다.</P></DIV></DIV>
+  <DIV CLASS="section" ID="page3"><DIV CLASS="section-filter"></DIV><DIV CLASS="intro"><H1>병원경영의 핵심</H1><P>병원경영의 핵심으로 자리매김한 고객관리의 효과가 증대됨에 따라<BR>고객만족을 위한 병원 지식경영 솔루션을 제안합니다.</P></DIV></DIV>
+  <DIV CLASS="section" ID="page4"><DIV CLASS="section-filter"></DIV><DIV CLASS="intro"><H1>차원높은<BR>병원을 위한<BR>통합고객관리</H1><P>고객채널을 통한 통합 의료정보 관리 고객중심 경영 요소로서<BR>고객의 중요성 인식하여 경영효율성과 불필요한 비용 감소로 진료효율성이 증가합니다.</P></DIV></DIV>
+  <DIV CLASS="section" ID="page5"><DIV CLASS="section-filter"></DIV><DIV CLASS="intro"><H1>고객성향<BR>분석을 통한<BR>통계관리</H1><P>우량고객 확보 충성고객을 통한 신규환자 창출효과 내원경로별, 소개고객에 대한 통계지원<BR>기간별 진료현황 및 예약이행율 통계지원 연령/지역별 환자추이/해당 조건별 분석합니다.</P></DIV></DIV>
+  <DIV CLASS="section" ID="page6">
+   <DIV CLASS="section-filter"></DIV>
+   <DIV CLASS="intro"><H1>메디컬<BR>통합 솔루션</H1><P>병원내부와 외부정보를 통합하여 중요 의사결정을 내리는데 필요한 맞춤정보를 제공하며<BR>의료 정보나 지식에 이르기까지 모든 자원을 통합하여 관리하고, 분석을 가능케하는 솔루션</P></DIV>
+   <DIV CLASS="copyright">(06121) 서울특별시 강남구 강남대로 112길 47<BR>사업자번호 220-05-83575 | 대표전화 02-556-9540 | <A HREF="mailto:help2.cube@gmail.com">help2.cube@gmail.com</A><BR>Copyright CUBE 2005. All rights reserved.</DIV>
+  </DIV>
+ </DIV>
+
+ <SCRIPT TYPE="text/javascript" SRC="./js/fullpage.js"></SCRIPT>
+ <SCRIPT TYPE="text/javascript">
+  // 접속 기기 판별
+  (function(){
+   var ua = navigator.userAgent.toLowerCase(); // User-Agent 획득
+   if (ua.indexOf('android') > -1) {
+    document.body.classList.add('is-android'); // 안드로이드 클래스 추가
+   } else if (/mac os|iphone|ipad|ipod/.test(ua)) {
+    document.body.classList.add('is-ios'); // iOS 클래스 추가
+   } // End of If
+  })(); // End of Device Check
+
+  // 애플 다운로드
+  function clickApple() {
+   if (document.body.classList.contains('is-ios')) {
+    location.href = '/cube/'; // 이동
+   } else {
+    showQR('apple'); // QR 표시
+   } // End of If
+  } // End of clickApple
+
+  // 안드로이드 다운로드
+  function clickAndroid() {
+   if (document.body.classList.contains('is-android')) {
+    location.href = 'https://play.google.com/store/apps/details?id=com.cube2005.cube2026'; // 이동
+   } else {
+    showQR('android'); // QR 표시
+   } // End of If
+  } // End of clickAndroid
+
+  // QR 모달 표시
+  function showQR(type) {
+   var qrImg = document.getElementById('qr-image'); // 이미지 요소
+   var qrTitle = document.getElementById('qr-title'); // 제목 요소
+   if (type === 'apple') {
+    qrImg.src = '/core/agent/apple_qrcode.png'; // 애플 QR
+    qrTitle.innerText = 'CUBE for iOS'; // 제목
+   } else {
+    qrImg.src = '/core/agent/android_qrcode.png'; // 안드로이드 QR
+    qrTitle.innerText = 'CUBE for Android'; // 제목
+   } // End of If
+   document.getElementById('qr-modal').classList.add('show'); // 모달 열기
+  } // End of showQR
+
+  // QR 모달 닫기
+  function closeQR() {
+   document.getElementById('qr-modal').classList.remove('show'); // 모달 닫기
+  } // End of closeQR
+
+  // 슬라이드 가이드 데이터 객체
+  var slideGuide = {
+   windows: {
+    title: 'CUBE 설치 - 윈도우 <SPAN ID="btn-download"></SPAN>', // 버튼이 들어갈 컨테이너 포함
+    list: [
+     {img: '/core/agent/windows_1_pc.png', text: '[추가 정보] 를 선택후 <span class="bold-text">[실행]</span> 을 클릭하세요.'},
+     {img: '/core/agent/windows_2_account.png', text: '사용자계정컨트롤의 메세지 <span class="bold-text">[예]</span> 를 클릭하세요.'},
+     {img: '/core/agent/windows_3_login.png', text: '바탕화면의 큐브아이콘을 마우스오른쪽버튼으로 선택후 <span class="bold-text">[관리자 권한으로 실행]</span> 클릭하세요.'}
+    ]
+   },
+   remote: {
+    title: '원격지원 가이드 <SPAN ID="btn-remote"></SPAN>',
+    list: [
+     {img: '/core/agent/remote_1.png', text: '원격지원 번호를 확인하여 상담원에게 알려주세요.<br>접속요청이 수신되면 <span class="bold-text">[승인]</span> 을 클릭하세요.'},
+    ]
+   }
+  }; // End of slideGuide
+
+  // 가이드 모달 제어 변수
+  var currentIdx = 0; // 가이드 슬라이드 인덱스
+  var currentType = 'windows'; // 현재 가이드 타입
+
+  // 가이드 생성 함수
+  function initGuide(type) {
+   currentType = type; // 타입 저장
+   var listEl = document.getElementById('guide-list'); // 목록 요소
+   var titleEl = document.getElementById('guide-title'); // 제목 요소
+   var html = ''; // HTML 문자열
+   var data = slideGuide[type]; // 데이터 객체 선택
+   titleEl.innerHTML = data.title; // HTML 렌더링
+   data.list.forEach(function(item) {
+    html += '<DIV CLASS="guide-slide"><P>' + item.text + '</P><IMG SRC="' + item.img + '"></DIV>'; // 슬라이드 추가
+   });
+   listEl.innerHTML = html; // 렌더링
+   if (type === 'windows') {
+    fetch('/setup/version.json') // 버전 정보 호출
+     .then(function(response) { return response.json(); }) // JSON 변환
+     .then(function(json) {
+      var v = json.version; // 버전 정보 저장
+      var fileName = 'CUBE_' + v + '_x64.exe'; // 파일명 조합
+      var downloadPath = '/setup/' + v + '/' + fileName; // 경로 조합
+      var btn = document.getElementById('btn-download'); // 버튼 컨테이너 선택
+      if(btn) {
+       btn.innerText = fileName; // 버튼 텍스트 설정
+       btn.onclick = function() { window.location.href = downloadPath; }; // 클릭 이벤트 연결
+      } // End of If
+     }) // End of Then
+     .catch(function(error) { console.error('Failed to load version:', error); }); // 에러 처리
+   } else if (type === 'remote') {
+    var anyBtn = document.getElementById('btn-remote'); // 애니데스크 버튼 요소
+    if(anyBtn) {
+     anyBtn.innerText = '원격지원 다운로드'; // 텍스트 설정
+     anyBtn.onclick = function() {window.location.href = 'https://download.anydesk.com/AnyDesk.exe'; }; // 새창 연결
+    } // End of If
+   } // End of If
+   var arrows = document.getElementsByClassName('guide-arrow'); // 화살표 요소 획득
+   var isSingle = data.list.length <= 1; // 리스트 길이 확인
+   for (var i = 0; i < arrows.length; i++) {
+    arrows[i].style.display = isSingle ? 'none' : 'flex'; // 상태에 따라 표시/숨김
+   } // End of For
+  } // End of initGuide
+
+  // 가이드 열기
+  function showGuide(type) {
+   initGuide(type || 'windows'); // 가이드 생성
+   currentIdx = 0; // 초기화
+   updateGuide(false); // 즉시 업데이트
+   document.getElementById('guide-modal').classList.add('show'); // 열기
+  } // End of showGuide
+
+  // 가이드 닫기
+  function closeGuide() {
+   document.getElementById('guide-modal').classList.remove('show'); // 닫기
+  } // End of closeGuide
+
+  // 가이드 이동
+  function moveGuide(n) {
+   var dataLen = slideGuide[currentType].list.length; // 현재 데이터 리스트 길이
+   currentIdx += n; // 인덱스 변경
+   if (currentIdx >= dataLen) currentIdx = 0; // 순환
+   if (currentIdx < 0) currentIdx = dataLen - 1; // 순환
+   updateGuide(true); // 애니메이션 업데이트
+  } // End of moveGuide
+
+  // 가이드 화면 갱신
+  function updateGuide(animate) {
+   var wrapper = document.getElementById('guide-list'); // 래퍼 요소
+   var offset = currentIdx * 800; // 이동 거리 계산 (800px 고정)
+   wrapper.style.transition = animate ? 'transform 0.5s ease-in-out' : 'none'; // 애니메이션 여부
+   wrapper.style.transform = 'translateX(-' + offset + 'px)'; // 슬라이드 이동
+  } // End of updateGuide
+
+  // 배경 이미지 랜덤
+  var imageTotal = 5;
+  var imagePage = 6;
+  for (var i = 0; i < imagePage; i++) {
+   var randomNum = Math.floor(Math.random() * imageTotal) + 1;
+   var page = 'page' + (i + 1);
+   document.getElementById(page).style.backgroundImage = 'url(background/bg' + (i + 1) + randomNum + '.jpg) ';
+  } // End of For
+
+  // Fullpage 초기화
+  var myFullpage = new fullpage('#fullpage', {
+   controlArrows: false,
+   navigation: true
+  }); // End of Fullpage Init
+
+  // 통신사 모달 제어
+  function book(args) {
+   var bookModal = document.getElementById('book'); // 모달 요소
+   switch (args) {
+    case 'show': bookModal.classList.add('show'); break; // 열기
+    case 'close': bookModal.classList.remove('show'); break; // 닫기
+    case 'kt': window.open('https://www.kt.com', '_blank'); break;
+    case 'uplus': window.open('https://www.uplus.co.kr', '_blank'); break;
+    case 'tworld': window.open('https://www.tworld.co.kr', '_blank'); break;
+    case 'sktelink': window.open('https://www.sktelink.com', '_blank'); break;
+    case 'skbroadband': window.open('https://www.skbroadband.com', '_blank'); break;
+    case 'hellomobile': window.open('https://mobile.lghellovision.net', '_blank'); break;
+    case 'sejong': window.open('https://www.sejongtelecom.net', '_blank'); break;
+    case 'kct': window.open('https://www.kcttel.com:2443/ft/kctweb001/kctweb001010.jsp', '_blank'); break;
+   } // End of Switch
+  } // End of book
+
+  // 셋업 파일 다운로드
+  function downloadSetup() {
+   fetch('/setup/version.json') // 버전 정보 호출
+    .then(function(response) { return response.json(); }) // 파싱
+    .then(function(data) {
+     var v = data.version; // 버전 획득
+     var downloadPath = '/setup/' + v + '/CUBE_' + v + '_x64.exe'; // 경로 조합
+     window.location.href = downloadPath; // 다운로드
+    })
+    .catch(function(error) { console.error('Download error:', error); }); // 에러 처리
+  } // End of downloadSetup
+
+  // IP 정보 표시
+  function recordData(data) {
+   var clientEl = document.getElementById('clientIP'); // 요소 획득
+   if(clientEl) clientEl.innerHTML = data.ip; // IP 출력
+  } // End of recordData
+ </SCRIPT>
+ <SCRIPT SRC="https://ipinfo.io/json?callback=recordData"></SCRIPT>
+</BODY>
+
+</HTML>
